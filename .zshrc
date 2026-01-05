@@ -5,14 +5,18 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# make homebrew installs available on path
-OPT_PATH="/opt/homebrew/bin/brew"
-LOCAL_BREW="/usr/local/bin/brew"
-if [[ -d OPT_PATH ]]; then 
-    eval "$($OPT_PATH shellenv)"
-else 
-    eval "$($LOCAL_BREW shellenv)"
-fi 
+# make homebrew installs available on path 
+# skip if not macOS
+
+if [[ $(uname) == "Darwin" ]]; then
+	OPT_PATH="/opt/homebrew/bin/brew"
+	LOCAL_BREW="/usr/local/bin/brew"
+	if [[ -d OPT_PATH ]]; then 
+    		eval "$($OPT_PATH shellenv)"
+	else 
+    		eval "$($LOCAL_BREW shellenv)"
+	fi 
+fi
 
 # location for zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.LOCAL/SHARE}/zinit/zinit.git"
