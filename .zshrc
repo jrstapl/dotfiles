@@ -87,6 +87,8 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # aliases
 alias ls='ls --color'
+alias lsa='ls -a'
+alias grep='grep --color=auto'
 
 # start fzf zsh binding
 eval "$(fzf --zsh)"
@@ -94,3 +96,6 @@ eval "$(zoxide init --cmd cd zsh)"
 
 
 export EDITOR=nvim
+
+# Work related variables not for version control
+[[ ! -f ~/.zshworkenv ]] || source ~/.zshworkenv
