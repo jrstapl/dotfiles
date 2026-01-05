@@ -6,7 +6,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # make homebrew installs available on path
-eval "$(/opt/homebrew/bin/brew shellenv)"
+OPT_PATH="/opt/homebrew/bin/brew"
+LOCAL_BREW="/usr/local/bin/brew"
+if [[ -d OPT_PATH ]]; then 
+    eval "$($OPT_PATH shellenv)"
+else 
+    eval "$($LOCAL_BREW shellenv)"
+fi 
 
 # location for zinit
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.LOCAL/SHARE}/zinit/zinit.git"
@@ -83,4 +89,4 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 
-export $EDITOR=nvim
+export EDITOR=nvim
