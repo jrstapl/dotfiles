@@ -15,6 +15,7 @@ vim.keymap.set("v", "<space>x", ":lua<CR>")
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
+-- nice highlight for yanking blocks
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -23,6 +24,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
+-- disable numbering on neovim terminals
 vim.api.nvim_create_autocmd("TermOpen", {
   group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
   callback = function()
@@ -31,6 +33,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
+-- open Snacks dashboard ONLY if nothing is passed to neovim on open
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     if vim.fn.argc() == 0 then
@@ -39,6 +42,22 @@ vim.api.nvim_create_autocmd("VimEnter", {
       end)
     end
   end,
+})
+
+-- disable ruff hover capabilities [https://docs.astral.sh/ruff/editors/setup/#neovim]
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == "ruff" then
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end
+  end,
+  desc = "LSP: Disable hover capability from Ruff",
 })
 
 local job_id = 0
@@ -69,6 +88,17 @@ vim.keymap.set("n", "-", "<cmd>Oil<CR>")
 -- bufferline
 vim.opt.termguicolors = true
 require("bufferline").setup {}
+
+-- buffer keybinds
+vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
+vim.keymap.set("n", "<leader>bd", function()
+  Snacks.bufdelete()
+end, { desc = "Delete Buffer" })
 
 -- conform
 require("conform").setup {
