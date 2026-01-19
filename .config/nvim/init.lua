@@ -72,13 +72,98 @@ vim.keymap.set("n", "-", "<cmd>Oil<CR>")
 vim.opt.termguicolors = true
 require("bufferline").setup{}
 
+local wanted_lsp = {"lua_ls", "gopls", "ruff", "ols", "clangd", "cmake"}
 
-vim.lsp.enable("lua_la")
-vim.lsp.enable("gopls")
-vim.lsp.enable("ruff")
-vim.lsp.enable("ols")
-vim.lsp.enable("clangd")
-vim.lsp.enable("cmake")
+
+
+local ex_is_available = function(ex)
+
+  local which = "which"
+  if  this_sys == "windows" then 
+    which = "where"
+  end
+  
+  local output = vim.fn.system(which .. " " .. ex)
+  if vim.v.shell_error == 0 then 
+    return true 
+  else
+    return false 
+  end 
+end
+
+
+local set_installer = function()
+  local installer = "brew"
+  if this_sys == "Windows" then
+    if ex_is_available("scoop") then 
+      installer = "scoop"
+    elseif ex_is_available("choco") then 
+      installer = "choco"
+    else
+      print("No package manager available for windows, please install or use dedicated tool {i.e. go -> gopls, cargo -> ruff, etc...}")
+      return nil 
+    end
+  end
+  if this_sys == "Linux" then 
+    if ex_is_available("brew") then 
+      goto continue
+    elseif ex_is_available("pacman") then
+      installer = "pacman"
+    elseif ex_is_available("apt") then 
+      installer = "apt"
+    elseif ex_is_available("dnf") then 
+      installer = "dnf"
+    elseif ex_is_available("yum") then 
+      installer = "yum"
+    else
+      print("No recognized package manager available")
+      return nil
+    end
+    ::continue::
+  end
+  return installer
+end
+
+local ensure_installed = function(lsp)
+  local uv = vim.uv 
+  if uv == nil then uv = vim.loop end
+  local this_sys = uv.os_uname().sysname
+
+  if lsp == "lua_ls" then 
+    lsp = "lua-language-server"
+  end
+
+  if ex_is_available(lsp) then 
+    if lsp == "lua-language-server" then 
+      lsp = "lua_ls"
+    end
+    vim.lsp.enable(lsp)
+  else 
+    print(lsp .. " is not available attempting to install...")
+    local installer = set_installer()
+    if installer == nil then 
+      return nil
+    end
+    local install_cmd = installer
+    if installer == "pacman" then 
+      install_cmd = install_cmd .. " -Syu"
+    else 
+      install_cmd = install_cmd .. " install"
+    end 
+
+    local output = vim.fn.system(install_cmd .. " " .. lsp)
+
+    if vim.v.shell_error ~= 0 then 
+      print("Unable to install " .. lsp)
+      print(output)
+    end
+  end
+end 
+
+for i, lsp in ipairs(wanted_lsp) do
+  ensure_installed(lsp)
+end
+
 
 
 
