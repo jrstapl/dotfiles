@@ -99,3 +99,6 @@ export EDITOR=nvim
 
 # Work related variables not for version control
 [[ ! -f ~/.zshworkenv ]] || source ~/.zshworkenv
+
+# other local variables
+[[ ! -f ~/.zshlocal ]] || source ~/.zshlocal
