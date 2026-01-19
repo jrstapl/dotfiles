@@ -73,7 +73,7 @@ vim.opt.termguicolors = true
 require("bufferline").setup{}
 
 
-vim.lsp.enable("lua_la")
+vim.lsp.enable("lua_ls")
 vim.lsp.enable("gopls")
 vim.lsp.enable("ruff")
 vim.lsp.enable("ols")
