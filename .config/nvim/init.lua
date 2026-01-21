@@ -17,70 +17,70 @@ vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
 -- nice highlight for yanking blocks
 vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking (copying) text",
-  group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
+	desc = "Highlight when yanking (copying) text",
+	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+	callback = function()
+		vim.highlight.on_yank()
+	end,
 })
 
 -- disable numbering on neovim terminals
 vim.api.nvim_create_autocmd("TermOpen", {
-  group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
-  callback = function()
-    vim.opt.number = false
-    vim.opt.relativenumber = false
-  end,
+	group = vim.api.nvim_create_augroup("custom-term-open", { clear = true }),
+	callback = function()
+		vim.opt.number = false
+		vim.opt.relativenumber = false
+	end,
 })
 
 -- open Snacks dashboard ONLY if nothing is passed to neovim on open
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    if vim.fn.argc() == 0 then
-      vim.schedule(function()
-        pcall(Snacks.dashboard())
-      end)
-    end
-  end,
+	callback = function()
+		if vim.fn.argc() == 0 then
+			vim.schedule(function()
+				pcall(Snacks.dashboard())
+			end)
+		end
+	end,
 })
 
 -- disable ruff hover capabilities [https://docs.astral.sh/ruff/editors/setup/#neovim]
 vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if client == nil then
-      return
-    end
-    if client.name == "ruff" then
-      -- Disable hover in favor of Pyright
-      client.server_capabilities.hoverProvider = false
-    end
-  end,
-  desc = "LSP: Disable hover capability from Ruff",
+	group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
+	callback = function(args)
+		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		if client == nil then
+			return
+		end
+		if client.name == "ruff" then
+			-- Disable hover in favor of Pyright
+			client.server_capabilities.hoverProvider = false
+		end
+	end,
+	desc = "LSP: Disable hover capability from Ruff",
 })
 
 local job_id = 0
 vim.keymap.set("n", "<space>to", function()
-  vim.cmd.vnew()
-  vim.cmd.term()
-  vim.cmd.wincmd "J"
-  vim.api.nvim_win_set_height(0, 5)
+	vim.cmd.vnew()
+	vim.cmd.term()
+	vim.cmd.wincmd "J"
+	vim.api.nvim_win_set_height(0, 5)
 
-  job_id = vim.bo.channel
+	job_id = vim.bo.channel
 end)
 
 local current_command = ""
 vim.keymap.set("n", "<space>te", function()
-  current_command = vim.fn.input "Command: "
+	current_command = vim.fn.input "Command: "
 end)
 
 vim.keymap.set("n", "<space>tr", function()
-  if current_command == "" then
-    current_command = vim.fn.input "Command: "
-  end
+	if current_command == "" then
+		current_command = vim.fn.input "Command: "
+	end
 
-  vim.fn.chansend(job_id, { current_command .. "\r\n" })
+	vim.fn.chansend(job_id, { current_command .. "\r\n" })
 end)
 
 vim.keymap.set("n", "-", "<cmd>Oil<CR>")
@@ -97,27 +97,32 @@ vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 vim.keymap.set("n", "<leader>bd", function()
-  Snacks.bufdelete()
+	Snacks.bufdelete()
 end, { desc = "Delete Buffer" })
 
 -- conform
 require("conform").setup {
-  formatters_by_ft = {
-    lua = { "stylua" },
-    python = { "ruff_format" },
-    go = { "goimports", "gofmt" },
-  },
-  format_on_save = {
-    lsp_format = "fallback",
-    timeout_ms = 500,
-  },
+	formatters_by_ft = {
+		lua = { "stylua" },
+		python = { "ruff_format" },
+		go = { "goimports", "gofmt" },
+	},
+	format_on_save = {
+		lsp_format = "fallback",
+		timeout_ms = 500,
+	},
 }
 
+
+
+-- treesitter
+
+
 vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function(args)
-    require("conform").format { bufnr = args.buf }
-  end,
+	pattern = "*",
+	callback = function(args)
+		require("conform").format { bufnr = args.buf }
+	end,
 })
 
 vim.lsp.enable "lua_ls"
