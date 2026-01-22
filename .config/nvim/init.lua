@@ -34,15 +34,29 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 
 -- open Snacks dashboard ONLY if nothing is passed to neovim on open
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = function()
+--
+-- 		if vim.fn.argc() == 0 then
+-- 			vim.schedule(function()
+-- 				pcall(Snacks.dashboard.open)
+-- 			end)
+-- 		end
+-- 	end,
+-- })
+
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		if vim.fn.argc() == 0 then
+		if vim.fn.argc() == 0 and not vim.g.snacks_dashboard_opened then
+			vim.g.snacks_dashboard_opened = true
 			vim.schedule(function()
-				pcall(Snacks.dashboard())
+				pcall(Snacks.dashboard.open)
 			end)
 		end
 	end,
 })
+
+
 
 -- disable ruff hover capabilities [https://docs.astral.sh/ruff/editors/setup/#neovim]
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -89,7 +103,8 @@ vim.keymap.set("n", "-", "<cmd>Oil<CR>")
 vim.opt.termguicolors = true
 require("bufferline").setup {}
 
--- buffer keybinds
+
+--buffer keybinds
 vim.keymap.set("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 vim.keymap.set("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
