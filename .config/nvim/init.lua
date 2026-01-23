@@ -72,6 +72,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
   desc = "LSP: Disable hover capability from Ruff",
 })
 
+vim.diagnostic.config { virtual_text = true, virtual_lines = false }
+
+vim.keymap.set("n", "<leader>td", function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { silent = true, noremap = true })
+
 local job_id = 0
 vim.keymap.set("n", "<space>to", function()
   vim.cmd.vnew()
