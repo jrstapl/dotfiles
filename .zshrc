@@ -102,5 +102,9 @@ export EDITOR=nvim
 
 [[ ! -f ~/.cargo/env ]] || . ~/.cargo/env
 
+[[ ! -f ~/.local/bin/env ]] || source ~/.local/bin/env
+
 # other local variables
 [[ ! -f ~/.zshlocal ]] || source ~/.zshlocal
+
+. "$HOME/.local/bin/env"
