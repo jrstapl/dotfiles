@@ -15,6 +15,9 @@ vim.keymap.set("v", "<space>x", ":lua<CR>")
 vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
+-- save from insert mode
+vim.keymap.set("i", "<C-w>", "<esc><Cmd>w<CR>")
+
 -- nice highlight for yanking blocks
 vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking text",
@@ -117,6 +120,15 @@ require("conform").setup {
     lua = { "stylua" },
     python = { "ruff_format" },
     go = { "goimports", "gofmt" },
+    odin = { "odinfmt" },
+  },
+  formatters = {
+    odinfmt = {
+      -- Change where to find the command if it isn't in your path.
+      command = "odinfmt",
+      args = { "-stdin" },
+      stdin = true,
+    },
   },
   format_on_save = {
     lsp_format = "fallback",
