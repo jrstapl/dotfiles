@@ -88,6 +88,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 # aliases
 alias ls='ls --color'
 alias lsa='ls -a'
+alias ll='ls -lah'
 alias grep='grep --color=auto'
 
 # start fzf zsh binding
