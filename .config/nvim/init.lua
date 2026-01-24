@@ -17,7 +17,7 @@ vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
 -- nice highlight for yanking blocks
 vim.api.nvim_create_autocmd("TextYankPost", {
-  desc = "Highlight when yanking (copying) text",
+  desc = "Highlight when yanking text",
   group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
   callback = function()
     vim.highlight.on_yank()
@@ -32,18 +32,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.opt.relativenumber = false
   end,
 })
-
--- open Snacks dashboard ONLY if nothing is passed to neovim on open
--- vim.api.nvim_create_autocmd("VimEnter", {
--- 	callback = function()
---
--- 		if vim.fn.argc() == 0 then
--- 			vim.schedule(function()
--- 				pcall(Snacks.dashboard.open)
--- 			end)
--- 		end
--- 	end,
--- })
 
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
@@ -77,6 +65,11 @@ vim.diagnostic.config { virtual_text = true, virtual_lines = false }
 vim.keymap.set("n", "<leader>td", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { silent = true, noremap = true })
+
+vim.keymap.set({ "n", "i", "s" }, "<esc>", function()
+  vim.cmd "noh"
+  return "<esc>"
+end, { expr = true, desc = "Clear search highlighting from last search" })
 
 local job_id = 0
 vim.keymap.set("n", "<space>to", function()
