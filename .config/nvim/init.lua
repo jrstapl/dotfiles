@@ -16,7 +16,7 @@ vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>")
 vim.keymap.set("n", "<M-k>", "<cmd>cprev<CR>")
 
 -- save from insert mode
-vim.keymap.set("i", "<C-w>", "<esc><Cmd>w<CR>")
+vim.keymap.set("i", "<C-w>", "<esc><Cmd>w<CR>i")
 
 -- nice highlight for yanking blocks
 vim.api.nvim_create_autocmd("TextYankPost", {
