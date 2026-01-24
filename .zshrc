@@ -8,7 +8,7 @@ fi
 # make homebrew installs available on path 
 # skip if not macOS
 
-if [[ $(uname) == "Darwin" ]]; then
+if [[ $(uname) == "Darwin" || $(command -v brew) ]]; then
 	OPT_PATH="/opt/homebrew/bin/brew"
 	LOCAL_BREW="/usr/local/bin/brew"
 	if [[ -d OPT_PATH ]]; then 
