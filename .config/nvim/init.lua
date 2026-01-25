@@ -122,6 +122,8 @@ require("conform").setup {
     python = { "ruff_format" },
     go = { "goimports", "gofmt" },
     odin = { "odinfmt" },
+    html = { "prettier" },
+    css = { "prettier" },
   },
   formatters = {
     odinfmt = {
@@ -153,3 +155,4 @@ vim.lsp.enable "ols"
 vim.lsp.enable "clangd"
 vim.lsp.enable "cmake"
 vim.lsp.enable "pyright"
+vim.lsp.enable "djlsp"
