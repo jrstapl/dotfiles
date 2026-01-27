@@ -108,4 +108,3 @@ export EDITOR=nvim
 # other local variables
 [[ ! -f ~/.zshlocal ]] || source ~/.zshlocal
 
-. "$HOME/.local/bin/env"
