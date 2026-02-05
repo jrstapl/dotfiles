@@ -124,6 +124,8 @@ require("conform").setup {
     odin = { "odinfmt" },
     html = { "prettier" },
     css = { "prettier" },
+    javascript = { "prettier" },
+    typescript = { "prettier" },
   },
   formatters = {
     odinfmt = {
