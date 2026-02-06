@@ -125,7 +125,10 @@ require("conform").setup {
     html = { "prettier" },
     css = { "prettier" },
     javascript = { "prettier" },
+    javascriptreact = { "prettier" },
     typescript = { "prettier" },
+    typescriptreact = { "prettier" },
+    json = { "prettier" },
   },
   formatters = {
     odinfmt = {
