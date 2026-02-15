@@ -129,6 +129,7 @@ require("conform").setup {
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
     json = { "prettier" },
+    zig = { "zigfmt" },
   },
   formatters = {
     odinfmt = {
@@ -161,7 +162,7 @@ vim.g.zig_fmt_autosave = 0
 -- enable  format-on-save from vim.lsp + ZLS
 --
 -- Formatting with ZLS matches `zig fmt`.
-vim.api.nvim_create_autocmd("BufWritePre", {
+--[[vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.zig", "*.zon" },
   callback = function(ev)
     vim.lsp.buf.format()
@@ -169,8 +170,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
       context = { only = { "source.organizeImports" } },
       apply = true,
     }
-  end,
-})
+end,
+}) --]]
 
 vim.lsp.enable "lua_ls"
 vim.lsp.enable "gopls"
