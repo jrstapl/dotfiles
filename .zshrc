@@ -8,14 +8,19 @@ fi
 # make homebrew installs available on path 
 # skip if not macOS
 
-if [[ $(uname) == "Darwin" || $(command -v brew) ]]; then
+if [[ $(command -v brew) ]]; then
+    if [[ $(uname) == "Darwin" ]]; then
 	OPT_PATH="/opt/homebrew/bin/brew"
-	LOCAL_BREW="/usr/local/bin/brew"
+	echo "here"
 	if [[ -d OPT_PATH ]]; then 
-    		eval "$($OPT_PATH shellenv)"
-	else 
-    		eval "$($LOCAL_BREW shellenv)"
+	    BREW_EVAL_PATH=OPT_PATH	
+	else
+	    BREW_EVAL_PATH="/usr/local/bin/brew"
 	fi 
+    elif [[ $(uname) == "Linux" ]]; then
+	BREW_EVAL_PATH="/home/linuxbrew/.linuxbrew/bin/brew"
+    fi
+    eval "$($BREW_EVAL_PATH shellenv)"
 fi
 
 # location for zinit
