@@ -118,17 +118,18 @@ end, { desc = "Delete Buffer" })
 -- conform
 require("conform").setup {
   formatters_by_ft = {
-    lua = { "stylua" },
-    python = { "ruff_format" },
-    go = { "goimports", "gofmt" },
-    odin = { "odinfmt" },
-    html = { "prettier" },
     css = { "prettier" },
+    go = { "goimports", "gofmt" },
+    html = { "prettier" },
     javascript = { "prettier" },
     javascriptreact = { "prettier" },
+    json = { "prettier" },
+    lua = { "stylua" },
+    odin = { "odinfmt" },
+    python = { "ruff_format" },
+    rust = { "rustfmt" },
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
-    json = { "prettier" },
     zig = { "zigfmt" },
   },
   formatters = {
@@ -182,3 +183,4 @@ vim.lsp.enable "cmake"
 vim.lsp.enable "pyright"
 vim.lsp.enable "djlsp"
 vim.lsp.enable "zls"
+vim.lsp.enable "rust-analyzer"
