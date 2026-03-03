@@ -22,17 +22,25 @@ return {
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
+        "bash",
         "c",
+        "css",
+        "go",
+        "html",
+        "json",
+        "javascript",
         "lua",
-        "vim",
-        "vimdoc",
-        "query",
         "markdown",
         "markdown_inline",
-        "rust",
-        "python",
         "odin",
-        "go",
+        "python",
+        "query",
+        "rust",
+        "toml",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
       },
       callback = function()
         -- syntax highlighting, provided by Neovim
@@ -42,6 +50,9 @@ return {
         -- vim.wo.foldmethod = 'expr'
         -- indentation, provided by nvim-treesitter
         vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.treesitter.language.register("html", "ejs")
+        vim.treesitter.language.register("javascript", "ejs")
+        vim.treesitter.language.register("embedded_template", "ejs")
       end,
     })
   end,

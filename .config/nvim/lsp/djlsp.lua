@@ -7,7 +7,7 @@
 ---@type vim.lsp.Config
 return {
   cmd = { "djlsp" },
-  filetypes = { "html", "htmldjango" },
+  filetypes = { "html", "htmldjango", "ejs" },
   root_markers = { ".git" },
   settings = {},
 }
