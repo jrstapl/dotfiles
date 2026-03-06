@@ -120,6 +120,7 @@ end, { desc = "Delete Buffer" })
 require("conform").setup {
   formatters_by_ft = {
     css = { "prettier" },
+    ejs = { "prettier" },
     go = { "goimports", "gofmt" },
     html = { "prettier" },
     javascript = { "prettier" },
@@ -141,7 +142,6 @@ require("conform").setup {
       stdin = true,
     },
     prettier = {
-      command = "prettier",
       args = function(ctx)
         if vim.endswith(ctx.filename, ".ejs") then
           return { "--stdin-filepath", "$FILENAME", "--parser", "html" }

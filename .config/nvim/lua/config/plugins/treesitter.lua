@@ -5,20 +5,23 @@ return {
   build = ":TSUpdate",
   config = function()
     local treesitter = require "nvim-treesitter"
-    print(treesitter)
-    require("nvim-treesitter").setup {}
-    -- require 'nvim-treesitter'.install({ "c",
-    -- 	"lua",
-    -- 	"vim",
-    -- 	"vimdoc",
-    -- 	"query",
-    -- 	"markdown",
-    -- 	"markdown_inline",
-    -- 	"rust",
-    -- 	"python",
-    -- 	"odin",
-    -- 	"go",
-    -- })
+    treesitter.setup {
+      ensure_installed = {
+        "c",
+        "lua",
+        "vim",
+        "vimdoc",
+        "query",
+        "markdown",
+        "markdown_inline",
+        "rust",
+        "python",
+        "odin",
+        "go",
+      },
+    }
+    -- local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
+    -- ft_to_parser.ejs = "html"
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
