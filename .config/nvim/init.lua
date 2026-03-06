@@ -141,14 +141,6 @@ require("conform").setup {
       args = { "-stdin" },
       stdin = true,
     },
-    prettier = {
-      args = function(ctx)
-        if vim.endswith(ctx.filename, ".ejs") then
-          return { "--stdin-filepath", "$FILENAME", "--parser", "html" }
-        end
-        return { "--stdin-filepath", "$FILENAME" }
-      end,
-    },
   },
   format_on_save = {
     lsp_format = "fallback",
@@ -156,8 +148,16 @@ require("conform").setup {
   },
 }
 
--- treesitter
-
+require("conform").formatters.prettier = {
+  append_args = function(self, ctx)
+    if vim.endswith(ctx.filename, ".ejs") then
+      print "Here!!"
+      return { "$FILENAME", "--parser", "html" }
+    end
+    return {}
+  end,
+}
+-- conform
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
