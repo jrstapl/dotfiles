@@ -151,7 +151,6 @@ require("conform").setup {
 require("conform").formatters.prettier = {
   append_args = function(self, ctx)
     if vim.endswith(ctx.filename, ".ejs") then
-      print "Here!!"
       return { "$FILENAME", "--parser", "html" }
     end
     return {}
