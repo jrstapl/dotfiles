@@ -130,6 +130,7 @@ require("conform").setup {
     odin = { "odinfmt" },
     python = { "ruff_format" },
     rust = { "rustfmt" },
+    tex = { "latexindent" },
     typescript = { "prettier" },
     typescriptreact = { "prettier" },
     zig = { "zigfmt" },
