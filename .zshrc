@@ -11,7 +11,6 @@ fi
 if [[ $(command -v brew) ]]; then
     if [[ $(uname) == "Darwin" ]]; then
 	OPT_PATH="/opt/homebrew/bin/brew"
-	echo "here"
 	if [[ -d OPT_PATH ]]; then 
 	    BREW_EVAL_PATH=OPT_PATH	
 	else
