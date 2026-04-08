@@ -38,17 +38,6 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    if vim.fn.argc() == 0 and not vim.g.snacks_dashboard_opened then
-      vim.g.snacks_dashboard_opened = true
-      vim.schedule(function()
-        pcall(Snacks.dashboard.open)
-      end)
-    end
-  end,
-})
-
 -- disable ruff hover capabilities [https://docs.astral.sh/ruff/editors/setup/#neovim]
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
