@@ -4,6 +4,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.filetype.add { extension = { ejs = "ejs" } }
 require "config.lazy"
 
+vim.cmd.colorscheme "kanagawa-dragon"
+
 vim.opt.shiftwidth = 4
 -- vim.opt.clipboard = "unnamedplus" -- for using system clip with P, otherwise use <C-V> for system and p/P for vim buffer
 vim.opt.number = true
