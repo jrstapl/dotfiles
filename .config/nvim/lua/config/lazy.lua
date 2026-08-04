@@ -37,6 +37,13 @@ require("lazy").setup {
       --  vim.cmd.colorscheme "kanagawa-dragon"
       -- end,
     },
+    {
+      "jvzjvz/gild.nvim",
+    },
+    {
+      "christerso/voidlight-lazyvim-theme",
+      name = "voidlight",
+    },
     { import = "config.plugins" },
   },
   change_detection = {
