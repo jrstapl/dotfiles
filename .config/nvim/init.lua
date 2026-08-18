@@ -119,7 +119,7 @@ require("conform").setup {
     json = { "prettier" },
     lua = { "stylua" },
     odin = { "odinfmt" },
-    python = { "ruff_format" },
+    python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
     rust = { "rustfmt" },
     tex = { "latexindent" },
     typescript = { "prettier" },
