@@ -119,7 +119,7 @@ require("conform").setup {
     json = { "prettier" },
     lua = { "stylua" },
     odin = { "odinfmt" },
-    python = { "ruff_format" },
+    python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
     rust = { "rustfmt" },
     tex = { "latexindent" },
     typescript = { "prettier" },
@@ -136,7 +136,7 @@ require("conform").setup {
   },
   format_on_save = {
     lsp_format = "fallback",
-    timeout_ms = 500,
+    timeout_ms = 1000,
   },
 }
 
